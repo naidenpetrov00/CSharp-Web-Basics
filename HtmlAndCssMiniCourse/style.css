@@ -1,0 +1,17 @@
+@import url('https://fonts.google.com/specimen/Coiny?query=coiny');
+
+p {
+    background-color: yellow;
+}
+
+section article {
+    border: 1px solid black;
+}
+
+section>a {
+    background: pink;
+}   
+
+.font{
+    font-family: 'Coiny';
+}
