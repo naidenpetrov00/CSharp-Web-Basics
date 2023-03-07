@@ -1,17 +1,79 @@
-@import url('https://fonts.google.com/specimen/Coiny?query=coiny');
+ body {
+     background: #c1c3cb;
+     font-family: Arial, Helvetica, sans-serif;
+     padding: 0 100px;
+ }
 
-p {
-    background-color: yellow;
+ header * {
+     color: #F9690E;
+ }
+
+ header article {
+     float: left;
+ }
+
+ header nav {
+     text-align: right;
+ }
+
+ header nav ul li {
+     display: inline-block;
+     padding: 5px;
+ }
+
+ header nav ul li a {
+     text-decoration: none;
+ }
+
+
+ main section:nth-child(1) {
+     background: url("Images/BBB_0511.jpg");
+     background-repeat: no-repeat;
+     background-position: center;
+     padding: 10rem;
+     text-align: center;
+ }
+
+ main section:nth-child(1) h1 {
+     color: white;
+     width: 72%;
+     margin: 0 auto;
+ }
+
+ main section:nth-child(1) h1 span {
+     color: #F9690E;
+ }
+
+ main section button {
+     text-align: center;
+     background: #F9690E;
+     color: white;
+     border: none;
+     padding: 7px;
+     margin-top: 25px;
+ }
+
+ main section:nth-child(2) article {
+     background: #F9690E;
+     color: white;
+     text-align: center;
+     display: inline-block;
+     width: 33.1%;
+ }
+
+ main section:nth-child(2) article p {
+    text-align: left ;
+    padding: 2rem;
 }
 
-section article {
-    border: 1px solid black;
+footer{
+    padding-top: 30px;
 }
 
-section>a {
-    background: pink;
-}   
+footer article:nth-child(1){
+    float: left;
+}
 
-.font{
-    font-family: 'Coiny';
+footer article:nth-child(2){
+    text-align: right;
 }
