@@ -1,0 +1,33 @@
+nav {
+    background: darkblue;
+}
+
+ul,
+body {
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 10px;
+}
+
+nav ul li a {
+    text-decoration: none; 
+    color: white
+}
+
+section{
+    border: 1px solid darkblue;
+    padding: 10px;
+    padding-top: 50px
+}
+
+article{
+    border: 1px solid darkblue;
+}
+
+footer p{
+    display: inline-block;
+    margin: 20px;
+}
