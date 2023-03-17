@@ -1,0 +1,15 @@
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\bin\Debug\net6.0\HttpRequester.exe
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\bin\Debug\net6.0\HttpRequester.deps.json
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\bin\Debug\net6.0\HttpRequester.runtimeconfig.json
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\bin\Debug\net6.0\HttpRequester.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\bin\Debug\net6.0\HttpRequester.pdb
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.csproj.AssemblyReference.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.GeneratedMSBuildEditorConfig.editorconfig
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.AssemblyInfoInputs.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.AssemblyInfo.cs
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.csproj.CoreCompileInputs.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\refint\HttpRequester.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.pdb
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.genruntimeconfig.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\ref\HttpRequester.dll
