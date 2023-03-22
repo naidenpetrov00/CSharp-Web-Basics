@@ -1,0 +1,15 @@
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\bin\Debug\net6.0\Test.exe
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\bin\Debug\net6.0\Test.deps.json
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\bin\Debug\net6.0\Test.runtimeconfig.json
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\bin\Debug\net6.0\Test.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\bin\Debug\net6.0\Test.pdb
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\Test.csproj.AssemblyReference.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\Test.GeneratedMSBuildEditorConfig.editorconfig
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\Test.AssemblyInfoInputs.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\Test.AssemblyInfo.cs
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\Test.csproj.CoreCompileInputs.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\Test.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\refint\Test.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\Test.pdb
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\Test.genruntimeconfig.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\AsynchronousProcessing\Test\obj\Debug\net6.0\ref\Test.dll
