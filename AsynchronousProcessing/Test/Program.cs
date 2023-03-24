@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace Test
 {
@@ -6,36 +7,85 @@ namespace Test
 	{
 		public static void Main(string[] args)
 		{
-			var lockObj = new object();
-			decimal money = 0;
+			// - deadlock example
+			var lockObj1 = new object();
+			var lockObj2 = new object();
+
 			var thread1 = new Thread(() =>
 			{
-				for (int i = 0; i < 100000; i++)
+				lock (lockObj1)
 				{
-					lock (lockObj)
+					Thread.Sleep(2000);
+					lock (lockObj2)
 					{
-						money++;
+
 					}
 				}
 			});
-			thread1.Start();
 
 			var thread2 = new Thread(() =>
 			{
-				for (int i = 0; i < 100000; i++)
+				lock (lockObj2)
 				{
-					lock (lockObj)
+					Thread.Sleep(2000);
+					lock (lockObj1)
 					{
-						money++;
+
 					}
 				}
 			});
-			thread2.Start();
 
+			thread1.Start();
+			thread2.Start();
 			thread1.Join();
 			thread2.Join();
+			// -
 
-			Console.WriteLine(money);
+			//var numbers = new ConcurrentQueue<int>(Enumerable
+			//	.Range(0, 10000)
+			//	.ToList());
+
+			//for (int i = 0; i < 5; i++)
+			//{
+			//	new Thread(() =>
+			//	{
+			//		while (numbers.Count > 0)
+			//		{
+			//			numbers.TryDequeue(out _);
+			//		}
+			//	}).Start();
+			//}
+
+			//var lockObj = new object();
+			//decimal money = 0;
+			//var thread1 = new Thread(() =>
+			//{
+			//	for (int i = 0; i < 100000; i++)
+			//	{
+			//		lock (lockObj)
+			//		{
+			//			money++;
+			//		}
+			//	}
+			//});
+			//thread1.Start();
+
+			//var thread2 = new Thread(() =>
+			//{
+			//	for (int i = 0; i < 100000; i++)
+			//	{
+			//		lock (lockObj)
+			//		{
+			//			money++;
+			//		}
+			//	}
+			//});
+			//thread2.Start();
+
+			//thread1.Join();
+			//thread2.Join();
+
+			//Console.WriteLine(money);
 
 			//var thread = new Thread(MyThreadMainMethod);
 			//thread.Start();
