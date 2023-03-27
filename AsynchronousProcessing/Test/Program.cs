@@ -1,44 +1,50 @@
-﻿using System.Collections.Concurrent;
-using System.Diagnostics;
-
-namespace Test
+﻿ namespace Test
 {
+	using System.Diagnostics;
+	using System.Collections.Concurrent;
+
 	public class Program
 	{
-		public static void Main(string[] args)
+		public static async Task Main(string[] args)
 		{
-			// - deadlock example
-			var lockObj1 = new object();
-			var lockObj2 = new object();
+			var httpClient = new HttpClient();
+			var httpResponse = await httpClient.GetAsync("https://softuni.bg");
+			var result = await httpResponse.Content.ReadAsStringAsync();
+			Console.WriteLine(result);
 
-			var thread1 = new Thread(() =>
-			{
-				lock (lockObj1)
-				{
-					Thread.Sleep(2000);
-					lock (lockObj2)
-					{
 
-					}
-				}
-			});
+			//// - deadlock example
+			//var lockObj1 = new object();
+			//var lockObj2 = new object();
 
-			var thread2 = new Thread(() =>
-			{
-				lock (lockObj2)
-				{
-					Thread.Sleep(2000);
-					lock (lockObj1)
-					{
+			//var thread1 = new Thread(() =>
+			//{
+			//	lock (lockObj1)
+			//	{
+			//		Thread.Sleep(2000);
+			//		lock (lockObj2)
+			//		{
 
-					}
-				}
-			});
+			//		}
+			//	}
+			//});
 
-			thread1.Start();
-			thread2.Start();
-			thread1.Join();
-			thread2.Join();
+			//var thread2 = new Thread(() =>
+			//{
+			//	lock (lockObj2)
+			//	{
+			//		Thread.Sleep(2000);
+			//		lock (lockObj1)
+			//		{
+
+			//		}
+			//	}
+			//});
+
+			//thread1.Start();
+			//thread2.Start();
+			//thread1.Join();
+			//thread2.Join();
 			// -
 
 			//var numbers = new ConcurrentQueue<int>(Enumerable

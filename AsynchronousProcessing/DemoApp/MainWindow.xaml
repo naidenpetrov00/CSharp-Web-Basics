@@ -10,6 +10,7 @@
         <Button Content="Button" HorizontalAlignment="Left" Height="52" Margin="328,344,0,0" VerticalAlignment="Top" Width="185" Click="Button_Click"/>
         <Image x:Name="Image1" HorizontalAlignment="Left" Height="113" Margin="513,63,0,0" VerticalAlignment="Top" Width="232"/>
         <Image x:Name="Image2" HorizontalAlignment="Left" Height="154" Margin="43,63,0,0" VerticalAlignment="Top" Width="224"/>
+        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="87,344,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked"/>
 
     </Grid>
 </Window>

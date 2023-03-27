@@ -3,6 +3,7 @@
 	using System.Net;
 	using System.Text;
 	using System.Net.Sockets;
+	using System.Net.Http;
 
 	public class Program
 	{
@@ -14,34 +15,43 @@
 
 			while (true)
 			{
-				var tcpCLient = tcpListener.AcceptTcpClient();
-				using var networkStream = tcpCLient.GetStream();
+				var tcpCLient = await tcpListener.AcceptTcpClientAsync();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+				Task.Run(() => ProccessClientAsync(tcpCLient));
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+			}
+		}
 
-				// TODO: Use buffer 
-				var requestBytes = new byte[100000];
-				var bytesRead = networkStream.Read(requestBytes, 0, requestBytes.Length);
-				var request = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
+		private static async Task ProccessClientAsync(TcpClient tcpClient)
+		{
+			const string NewLine = "\r\n";
 
-				var responseText = @"<form action='/Account/Login' method='post'>
+			using var networkStream = tcpClient.GetStream();
+
+			// TODO: Use buffer 
+			var requestBytes = new byte[100000];
+			var bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
+			var request = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
+
+			var responseText = @"<form action='/Account/Login' method='post'>
 <input type=text name='username'/>
 <input type=password name='password'/>
 <input type=submit value='Login'/>
 </form>";
 
-				var response = "HTTP/1.0 200 OK" + NewLine +
-							"Server: NaidenServer/1.0" + NewLine +
-							"Content-Type: text/html" + NewLine +
-							//"Content-Disposition: attachment; filename=naiden.html" + NewLine +
-							"Content-Lenght: " + responseText.Length + NewLine +
-							NewLine +
-							responseText;
-				var responseBytes = Encoding.UTF8.GetBytes(response);
+			var response = "HTTP/1.0 200 OK" + NewLine +
+						"Server: NaidenServer/1.0" + NewLine +
+						"Content-Type: text/html" + NewLine +
+						//"Content-Disposition: attachment; filename=naiden.html" + NewLine +
+						"Content-Lenght: " + responseText.Length + NewLine +
+						NewLine +
+						responseText;
+			var responseBytes = Encoding.UTF8.GetBytes(response);
 
-				networkStream.Write(responseBytes, 0, responseBytes.Length);
+			await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length);
 
-				Console.WriteLine(request);
-				Console.WriteLine(new string('=', 60));
-			}
+			Console.WriteLine(request);
+			Console.WriteLine(new string('=', 60));
 		}
 
 		public static async Task HttpRequester()
