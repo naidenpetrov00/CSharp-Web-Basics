@@ -2,15 +2,14 @@
 {
 	using System.Net;
 	using System.Text;
-	using System.Net.Sockets;
 	using System.Net.Http;
+	using System.Net.Sockets;
 	using System.Text.RegularExpressions;
 
 	public class Program
 	{
 		public static async Task Main(string[] args)
 		{
-			const string NewLine = "\r\n";
 			var tcpListener = new TcpListener(IPAddress.Loopback, 80);
 			tcpListener.Start();
 
@@ -33,20 +32,19 @@
 			var requestBytes = new byte[100000];
 			var bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
 			var request = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
-			var username = Regex.Match(request, @"Cookie: user=[^\n]*\n").Value;
-			var responseText = "<h1>" + username + "</h1>";
-			var response = "HTTP/1.0 200 OK" + NewLine +
+			var fileContent = File.ReadAllBytes("cat.jpg");
+			var responseText = "";
+			var headers = "HTTP/1.0 200 OK" + NewLine +
 						"Server: NaidenServer/1.0" + NewLine +
-						"Content-Type: text/html" + NewLine +
+						"Content-Type: image/jpeg" + NewLine +
 						//"Content-Disposition: attachment; filename=naiden.html" + NewLine +
-						"Content-Lenght: " + responseText.Length + NewLine +
+						"Content-Lenght: " + fileContent.Length + NewLine +
 						"Set-Cookie: user=naiden; Max-Age=3600" + NewLine +
-						NewLine +
-						responseText;
-			var responseBytes = Encoding.UTF8.GetBytes(response);
+						NewLine;
+			var headersBytes = Encoding.UTF8.GetBytes(headers);
 
-			await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length);
-
+			await networkStream.WriteAsync(headersBytes);
+			await networkStream.WriteAsync(fileContent);
 			Console.WriteLine(request);
 			Console.WriteLine(new string('=', 60));
 		}

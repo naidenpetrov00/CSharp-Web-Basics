@@ -13,3 +13,4 @@ C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0
 C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.pdb
 C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\HttpRequester.genruntimeconfig.cache
 C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\obj\Debug\net6.0\ref\HttpRequester.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\HttpRequester\HttpRequester\bin\Debug\net6.0\cat.jpg
