@@ -1,0 +1,15 @@
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\bin\Debug\net6.0\SIS.MvcFramework.deps.json
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\bin\Debug\net6.0\SIS.MvcFramework.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\bin\Debug\net6.0\SIS.MvcFramework.pdb
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\bin\Debug\net6.0\SIS.HTTP.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\bin\Debug\net6.0\SIS.HTTP.pdb
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\SIS.MvcFramework.csproj.AssemblyReference.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\SIS.MvcFramework.GeneratedMSBuildEditorConfig.editorconfig
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\SIS.MvcFramework.AssemblyInfoInputs.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\SIS.MvcFramework.AssemblyInfo.cs
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\SIS.MvcFramework.csproj.CoreCompileInputs.cache
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\SIS.MvcFramework.csproj.CopyComplete
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\SIS.MvcFramework.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\refint\SIS.MvcFramework.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\SIS.MvcFramework.pdb
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework\obj\Debug\net6.0\ref\SIS.MvcFramework.dll
