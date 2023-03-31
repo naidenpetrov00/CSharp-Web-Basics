@@ -48,21 +48,16 @@
 			var requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
 			var request = new HttpRequest(requestAsString);
 
-			var stringContent = Encoding.UTF8.GetBytes("<form method='post'><input name='username' /><input type='submit' /></form>");
+			var stringContent = Encoding.UTF8.GetBytes("<h1> Hello </h1>");
 			var response = new HttpResponse(HttpResponseCode.Ok, stringContent);
-			var headers = "HTTP/1.0 200 OK" + HttpConstants.NewLine +
-						"Server: NaidenServer/1.0" + HttpConstants.NewLine +
-						"Content-Type: text/html" + HttpConstants.NewLine +
-						//"Content-Disposition: attachment; filename=naiden.html" + NewLine +
-						"Content-Lenght: " + stringContent.Length + HttpConstants.NewLine +
-						"Set-Cookie: user=naiden; Max-Age=3600" + HttpConstants.NewLine +
-						HttpConstants.NewLine;
-			var headersBytes = Encoding.UTF8.GetBytes(headers);
+			response.Headers.Add(new Header("Server", "NaidenServer/1.0"));
+			response.Headers.Add(new Header("Content-type", "text/html"));
+			var responseBytes = Encoding.UTF8.GetBytes(response.ToString());
 
-			await networkStream.WriteAsync(headersBytes);
-			await networkStream.WriteAsync(stringContent);
-			Console.WriteLine(string.Join("\n", request.Headers));
-			Console.WriteLine(string.Join("\n", request.Body));
+			await networkStream.WriteAsync(responseBytes);
+			await networkStream.WriteAsync(response.Body);
+
+			Console.WriteLine(request);
 			Console.WriteLine(new string('=', 60));
 		}
 	}

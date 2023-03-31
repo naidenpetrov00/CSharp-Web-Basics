@@ -7,7 +7,7 @@
 	{
 		public HttpResponse(HttpResponseCode statusCode, byte[] body)
 		{
-			this.Version = HttpVersionType.Http11;
+			this.Version = HttpVersionType.Http10;
 			this.Code = statusCode;
 			this.Headers = new List<Header>();
 			this.Body = body;
@@ -38,12 +38,14 @@
 				_ => "HTTP/1.1",
 			};
 
-			responseAsString.Append($"{httpVersionAsString} {(int)this.StatusCode} {this.StatusCode}" + HttpConstants.NewLine);
+			responseAsString.Append($"{httpVersionAsString} {(int)this.Code} {this.Code}" + HttpConstants.NewLine);
 
 			foreach (var header in this.Headers)
 			{
 				responseAsString.Append(header.ToString() + HttpConstants.NewLine);
 			}
+
+			responseAsString.Append(HttpConstants.NewLine);
 
 			return responseAsString.ToString();
 		}
