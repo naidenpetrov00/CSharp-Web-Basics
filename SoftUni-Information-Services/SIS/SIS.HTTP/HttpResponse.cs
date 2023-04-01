@@ -10,6 +10,7 @@
 			this.Version = HttpVersionType.Http10;
 			this.Code = statusCode;
 			this.Headers = new List<Header>();
+			this.Cookies = new List<ResponseCookie>();
 			this.Body = body;
 
 			if (body?.Length > 0)
@@ -24,12 +25,13 @@
 
 		public IList<Header> Headers { get; set; }
 
+		public IList<ResponseCookie> Cookies { get; set; }
+
 		public byte[] Body { get; set; }
 
 		public override string ToString()
 		{
 			var responseAsString = new StringBuilder();
-
 			var httpVersionAsString = this.Version switch
 			{
 				HttpVersionType.Http10 => "HTTP/1.0",
@@ -37,12 +39,15 @@
 				HttpVersionType.Http20 => "HTTP/2.0",
 				_ => "HTTP/1.1",
 			};
-
 			responseAsString.Append($"{httpVersionAsString} {(int)this.Code} {this.Code}" + HttpConstants.NewLine);
 
 			foreach (var header in this.Headers)
 			{
 				responseAsString.Append(header.ToString() + HttpConstants.NewLine);
+			}
+			foreach (var cookie in this.Cookies)
+			{
+				responseAsString.Append("Set-Cookie: " + cookie.ToString() + HttpConstants.NewLine);
 			}
 
 			responseAsString.Append(HttpConstants.NewLine);

@@ -2,25 +2,14 @@
 {
 	public class Cookie
 	{
+		public Cookie(string name, string value)
+		{
+			Name = name;
+			Value = value;
+		}
+
 		public string Name { get; set; }
 
 		public string Value { get; set; }
-	}
-
-	public class ResponseCookie : Cookie
-	{
-		public string Domain { get; set; }
-
-		public string Path { get; set; }
-
-		public DateTime? Expires { get; set; }
-
-		public long MaxAge { get; set; }
-
-		public bool Secure { get; set; }
-
-		public bool HttpOnly { get; set; }
-
-		public SameSiteType MyProperty { get; set; }
 	}
 }
