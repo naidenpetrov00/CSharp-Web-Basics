@@ -18,3 +18,4 @@ C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\DemoApp\obj
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\DemoApp\obj\Debug\net6.0\DemoApp.pdb
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\DemoApp\obj\Debug\net6.0\DemoApp.genruntimeconfig.cache
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\DemoApp\obj\Debug\net6.0\ref\DemoApp.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\DemoApp\bin\Debug\net6.0\wwwroot\favicon.ico

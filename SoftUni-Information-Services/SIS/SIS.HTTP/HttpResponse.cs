@@ -6,11 +6,9 @@
 	public class HttpResponse
 	{
 		public HttpResponse(HttpResponseCode statusCode, byte[] body)
+			: this()
 		{
-			this.Version = HttpVersionType.Http10;
-			this.Code = statusCode;
-			this.Headers = new List<Header>();
-			this.Cookies = new List<ResponseCookie>();
+			this.StatusCode = statusCode;
 			this.Body = body;
 
 			if (body?.Length > 0)
@@ -19,9 +17,16 @@
 			}
 		}
 
+		internal HttpResponse()
+		{
+			this.Version = HttpVersionType.Http10;
+			this.Headers = new List<Header>();
+			this.Cookies = new List<ResponseCookie>();
+		}
+
 		public HttpVersionType Version { get; set; }
 
-		public HttpResponseCode Code { get; set; }
+		public HttpResponseCode StatusCode { get; set; }
 
 		public IList<Header> Headers { get; set; }
 
@@ -39,7 +44,7 @@
 				HttpVersionType.Http20 => "HTTP/2.0",
 				_ => "HTTP/1.1",
 			};
-			responseAsString.Append($"{httpVersionAsString} {(int)this.Code} {this.Code}" + HttpConstants.NewLine);
+			responseAsString.Append($"{httpVersionAsString} {(int)this.StatusCode} {this.StatusCode}" + HttpConstants.NewLine);
 
 			foreach (var header in this.Headers)
 			{

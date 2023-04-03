@@ -1,9 +1,9 @@
 ﻿namespace DemoApp
 {
+	using System;
 	using SIS.HTTP;
 	using System.Text;
-	using SIS.MvcFramework;
-	using System;
+	using SIS.HTTP.Response;
 
 	public class Program
 	{
@@ -21,36 +21,22 @@
 
 		private static HttpResponse FavIcon(HttpRequest request)
 		{
-			throw new NotImplementedException();
+			var byteContent = File.ReadAllBytes("wwwroot/favicon.ico");
+			return new FileResponse(byteContent, "image/x-icon");
 		}
 
 		public static HttpResponse Index(HttpRequest request)
 		{
-			var content = "<h1>Home page</h1>";
-			var stringContent = Encoding.UTF8.GetBytes(content);
-			var response = new HttpResponse(HttpResponseCode.Ok, stringContent);
-			response.Headers.Add(new Header("Content-type", "text/html"));
-
-			return response;
+			return new HtmlResponse("<h1>Home page</h1>");
 		}
 
 		public static HttpResponse Login(HttpRequest request)
 		{
-			var content = "<h1>Login page</h1>";
-			var stringContent = Encoding.UTF8.GetBytes(content);
-			var response = new HttpResponse(HttpResponseCode.Ok, stringContent);
-			response.Headers.Add(new Header("Content-type", "text/html"));
-
-			return response;
+			return new HtmlResponse("<h1>Login page</h1>");
 		}
 		public static HttpResponse DoLogin(HttpRequest request)
 		{
-			var content = "<h1>Login page</h1>";
-			var stringContent = Encoding.UTF8.GetBytes(content);
-			var response = new HttpResponse(HttpResponseCode.Ok, stringContent);
-			response.Headers.Add(new Header("Content-type", "text/html"));
-
-			return response;
+			return new HtmlResponse("<h1>Login page</h1>");
 		}
 	}
 }

@@ -9,12 +9,14 @@
 	{
 		private readonly TcpListener tcpListener;
 		private readonly IList<Route> routeTable;
+		private readonly IDictionary<string, IDictionary<string, string>> sessions;
 
 		//TODO: action
 		public HttpServer(int port, IList<Route> routeTable)
 		{
 			this.tcpListener = new TcpListener(IPAddress.Loopback, port);
 			this.routeTable = routeTable;
+			this.sessions = new Dictionary<string, IDictionary<string, string>>();
 		}
 
 		public async Task ResetAsync()
@@ -52,6 +54,13 @@
 				var bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
 				var requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
 				var request = new HttpRequest(requestAsString);
+				var sessionCookie = request.Cookies.FirstOrDefault(c => c.Name == HttpConstants.SessionIdCookieName);
+
+				if (sessionCookie != null && this.sessions.ContainsKey(sessionCookie.Value))
+				{
+					request.SessionData= this.sessions[sessionCookie.Value];
+				}
+				Console.WriteLine($"{request.Methood} {request.Path}");
 
 				HttpResponse response;
 				var route = this.routeTable
@@ -67,12 +76,19 @@
 				}
 
 				response.Headers.Add(new Header("Server", "NaidenServer/1.0"));
-				response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString())
+
+				
+				if (sessionCookie == null || !this.sessions.ContainsKey(sessionCookie.Value))
 				{
-					Secure = true,
-					HttpOnly = true,
-					MaxAge = 3600,
-				});
+					var newSessionId = Guid.NewGuid().ToString();
+					this.sessions.Add(newSessionId, new Dictionary<string, string>());
+					response.Cookies.Add(new ResponseCookie(HttpConstants.SessionIdCookieName, newSessionId)
+					{
+						Secure = true,
+						HttpOnly = true,
+						MaxAge = 30 * 3600,
+					});
+				}
 
 				var responseBytes = Encoding.UTF8.GetBytes(response.ToString());
 
