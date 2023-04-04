@@ -1,13 +1,11 @@
 ﻿namespace DemoApp
 {
-	using System;
 	using SIS.HTTP;
-	using System.Text;
 	using SIS.HTTP.Response;
 
 	public class Program
 	{
-		static async Task Main(string[] args)
+		public static async Task Main(string[] args)
 		{
 			var routeTable = new List<Route>();
 			routeTable.Add(new Route(HttpMethodType.GET, "/", Index));

@@ -55,10 +55,18 @@
 				var requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
 				var request = new HttpRequest(requestAsString);
 				var sessionCookie = request.Cookies.FirstOrDefault(c => c.Name == HttpConstants.SessionIdCookieName);
+				string newSessionId = null;
 
 				if (sessionCookie != null && this.sessions.ContainsKey(sessionCookie.Value))
 				{
-					request.SessionData= this.sessions[sessionCookie.Value];
+					request.SessionData = this.sessions[sessionCookie.Value];
+				}
+				else
+				{
+					newSessionId = Guid.NewGuid().ToString();
+					var dictionary = new Dictionary<string, string>();
+					this.sessions.Add(newSessionId, dictionary);
+					request.SessionData = dictionary;
 				}
 				Console.WriteLine($"{request.Methood} {request.Path}");
 
@@ -77,11 +85,9 @@
 
 				response.Headers.Add(new Header("Server", "NaidenServer/1.0"));
 
-				
-				if (sessionCookie == null || !this.sessions.ContainsKey(sessionCookie.Value))
+
+				if (newSessionId != null)
 				{
-					var newSessionId = Guid.NewGuid().ToString();
-					this.sessions.Add(newSessionId, new Dictionary<string, string>());
 					response.Cookies.Add(new ResponseCookie(HttpConstants.SessionIdCookieName, newSessionId)
 					{
 						Secure = true,
