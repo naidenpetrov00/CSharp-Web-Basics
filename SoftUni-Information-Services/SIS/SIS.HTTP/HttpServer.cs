@@ -26,7 +26,7 @@
 		}
 
 		public async Task StartAsync()
-		{
+		{ 
 			tcpListener.Start();
 
 			while (true)
@@ -55,7 +55,7 @@
 				var requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
 				var request = new HttpRequest(requestAsString);
 				var sessionCookie = request.Cookies.FirstOrDefault(c => c.Name == HttpConstants.SessionIdCookieName);
-				string newSessionId = null;
+				string? newSessionId = null;
 
 				if (sessionCookie != null && this.sessions.ContainsKey(sessionCookie.Value))
 				{
