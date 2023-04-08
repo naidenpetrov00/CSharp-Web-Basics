@@ -1,7 +1,7 @@
 ﻿namespace DemoApp
 {
-	using Microsoft.EntityFrameworkCore;
 	using SulsApp.Models;
+	using Microsoft.EntityFrameworkCore;
 
 	public class ApplicationDbContext : DbContext
 	{
