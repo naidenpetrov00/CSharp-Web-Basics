@@ -7,7 +7,7 @@
 
 	public class ServiceConfig : IMvcApplication
 	{
-
+		 
 		public void Configure(IList<Route> routeTable)
 		{
 			routeTable.Add(new Route(HttpMethodType.GET, "/", new HomeController().Index));

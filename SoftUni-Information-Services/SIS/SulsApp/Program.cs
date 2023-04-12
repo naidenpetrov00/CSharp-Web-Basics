@@ -9,4 +9,4 @@
 			await WebHost.Start(new ServiceConfig());
 		}
 	}
-}
+} 
