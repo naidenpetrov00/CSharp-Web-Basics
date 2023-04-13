@@ -3,6 +3,7 @@
 	using Microsoft.CodeAnalysis;
 	using Microsoft.CodeAnalysis.CSharp;
 	using System.Reflection;
+	using System.Text;
 
 	public interface IView
 	{
@@ -56,14 +57,52 @@ using SIS.MvcFramework;
 			}
 
 			compilation = compilation.AddSyntaxTrees(SyntaxFactory.ParseSyntaxTree(code));
-			compilation.Emit("appView.dll");
 
-			return null;
+			using var memoryStream = new MemoryStream();
+			var compilationResut = compilation.Emit(memoryStream);
+			if (!compilationResut.Success)
+			{
+				return new ErrorView(compilationResut.Diagnostics
+					.Where(x => x.Severity == DiagnosticSeverity.Error)
+					.Select(x => x.GetMessage()));
+			}
+
+			memoryStream.Seek(0, SeekOrigin.Begin);
+			var assemblyByteArray = memoryStream.ToArray();
+			var assembly = Assembly.Load(assemblyByteArray);
+			var type = assembly.GetType("AppViewNamespace.AppViewCode");
+			var instance = Activator.CreateInstance(type) as IView;
+
+			return instance;
 		}
 
 		private string PrepareCSharpCode(string templateHtml)
 		{
-			return string.Empty;
+			var supportedOpperators = new[] { "if", "for", "foreach", "else" };
+			var cSharpCode = new StringBuilder();
+			var reader = new StringReader(templateHtml);
+			string line;
+
+			while ((line = reader.ReadLine()) != null)
+			{
+				if (line.TrimStart().StartsWith("{") || line.TrimStart().StartsWith("}"))
+				{
+					cSharpCode.AppendLine(line);
+				}
+				else if (supportedOpperators.Any(x => line.TrimStart().StartsWith("@" + x)))
+				{
+					var indexAt = line.IndexOf('@');
+					line = line.Remove(indexAt, 1);
+					cSharpCode.AppendLine(line);
+				}
+				else
+				{
+					cSharpCode.AppendLine($"html.AppendLine(@\"{line.Replace("\"", "\"\"")}\");");
+				}
+
+			}
+
+			return cSharpCode.ToString();
 		}
 	}
 }
