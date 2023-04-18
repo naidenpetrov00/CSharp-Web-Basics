@@ -4,6 +4,7 @@
 	using Microsoft.CodeAnalysis.CSharp;
 	using System.Reflection;
 	using System.Text;
+	using System.Text.RegularExpressions;
 
 	public interface IView
 	{
@@ -78,6 +79,7 @@ using SIS.MvcFramework;
 
 		private string PrepareCSharpCode(string templateHtml)
 		{
+			var cSharpExpressionRegex = new Regex(@"[^\<\""\s]+", RegexOptions.Compiled);
 			var supportedOpperators = new[] { "if", "for", "foreach", "else" };
 			var cSharpCode = new StringBuilder();
 			var reader = new StringReader(templateHtml);
@@ -91,9 +93,28 @@ using SIS.MvcFramework;
 				}
 				else if (supportedOpperators.Any(x => line.TrimStart().StartsWith("@" + x)))
 				{
-					var indexAt = line.IndexOf('@');
+					var indexAt = line.IndexOf("@");
 					line = line.Remove(indexAt, 1);
 					cSharpCode.AppendLine(line);
+				}
+				else if (line.Contains("@"))
+				{
+					var currCSharpLine = new StringBuilder($"html.AppendLine(@\"");
+					while (line.Contains("@"))
+					{
+						var signLocation = line.IndexOf("@");
+						var htmlBefore = line.Substring(0, signLocation);
+						currCSharpLine.Append(htmlBefore.Replace("\"", "\"\"") + "\" + ");
+						var cSharpAndEndOfLine = line.Substring(signLocation + 1);
+						var cSharpExpression = cSharpExpressionRegex.Match(cSharpAndEndOfLine);
+						currCSharpLine.Append(cSharpExpression.Value + " + @\"");
+						var lineAfter = cSharpAndEndOfLine.Substring(cSharpExpression.Length);
+						line = lineAfter;
+					}
+
+					currCSharpLine.AppendLine(line.Replace("\"", "\"\"") + "\");");
+					cSharpCode.AppendLine(currCSharpLine.ToString());
+
 				}
 				else
 				{
