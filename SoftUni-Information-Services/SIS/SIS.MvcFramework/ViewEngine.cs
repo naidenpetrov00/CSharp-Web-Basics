@@ -17,6 +17,12 @@
 		public string GetHtml(string templateHtml, object model)
 		{
 			var methodCode = PrepareCSharpCode(templateHtml);
+			var typeName = model?.GetType().FullName ?? "object";
+			if (model?.GetType().IsGenericType == true)
+			{
+				typeName = model.GetType().Name.Replace("`1", string.Empty) +
+					"<" + model.GetType().GenericTypeArguments.First().Name + ">";
+			}
 			var code =
 $@"namespace AppViewNamespace
 {{
@@ -30,6 +36,8 @@ using SIS.MvcFramework;
 	{{
 		public string GetHtml(object model)
 		{{
+			var Model = model as {typeName};
+			object User = null;
 			var html = new StringBuilder();
 			{methodCode}
 			return html.ToString();
@@ -48,8 +56,12 @@ using SIS.MvcFramework;
 				.Create("AppViewAssembly")
 				.WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
 				.AddReferences(MetadataReference.CreateFromFile(typeof(IView).Assembly.Location))
-				.AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
-				.AddReferences(MetadataReference.CreateFromFile(model.GetType().Assembly.Location));
+				.AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
+			if (model != null)
+			{
+				compilation = compilation.AddReferences(MetadataReference.CreateFromFile(model.GetType().Assembly.Location));
+			}
+
 			var libraries = Assembly.Load(new AssemblyName("netstandard")).GetReferencedAssemblies();
 			foreach (var library in libraries)
 			{
@@ -97,7 +109,7 @@ using SIS.MvcFramework;
 					line = line.Remove(indexAt, 1);
 					cSharpCode.AppendLine(line);
 				}
-				else if (line.Contains("@"))
+				else
 				{
 					var currCSharpLine = new StringBuilder($"html.AppendLine(@\"");
 					while (line.Contains("@"))
@@ -114,11 +126,6 @@ using SIS.MvcFramework;
 
 					currCSharpLine.AppendLine(line.Replace("\"", "\"\"") + "\");");
 					cSharpCode.AppendLine(currCSharpLine.ToString());
-
-				}
-				else
-				{
-					cSharpCode.AppendLine($"html.AppendLine(@\"{line.Replace("\"", "\"\"")}\");");
 				}
 
 			}

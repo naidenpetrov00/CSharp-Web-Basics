@@ -11,7 +11,7 @@ namespace SIS.MvcFramework.Tests
 			var viewModel = new TestViewModel()
 			{
 				Name = "Niki",
-				Year = 2000,
+				Year = 2023,
 				Numbers = new List<int> { 1, 10, 100, 1000, 100000 },
 			};
 
