@@ -106,3 +106,6 @@ C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\wwwroot\css\site.css
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\wwwroot\favicon.ico
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\wwwroot\css\reset.css

@@ -1,7 +1,84 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>SULS Platform</title>
+    <link rel="stylesheet" href="../../wwwroot/css/site.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="/">SULS</a>
+        <div class="collapse navbar-collapse" id="navbar Supported Content">
+            @if(User != null)
+            {
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Problems/Create">Create Problem</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Users/Logout">Logout</a>
+                </li>
+            </ul>
+            }
+            @else
+            {
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Users/Login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Users/Register">Register</a>
+                </li>
+            </ul>
+            }
+        </div>
+    </nav>
+    <div class="top-border-line primary-separator"></div>
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+    <div class="bottom-border-line primary-separator"></div>
+    <div class="container">
+        <footer>
+            <p><strong>CopyRight© MD Design Studios. All rights reserved</strong></p>
+        </footer>
+    </div>
+</body>
+</html>
+<form action="#" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <input type="submit" value="Login">
+</form>
+<form action="#" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="confirm_password">Confirm Password:</label>
+    <input type="password" id="confirm_password" name="confirm_password" required>
+
+    <input type="submit" value="Register">
+</form>
 <div class="row">
     <div class="jumbotron col-md-12">
         <div class="heading-container bottom-buffer-md">
-            <h1>Welcome to SULS Platform!</h1>
+            <h1>@Model.Message</h1>
+            <h2>@Model.Year</h2>
         </div>
         <h3><a href="/Users/Login"> Login </a> to use the Platform.</h3>
         <h3><a href="/Users/Register"> Register </a> if you don't have an account.</h3>

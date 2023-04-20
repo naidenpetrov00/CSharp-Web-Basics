@@ -1,0 +1,29 @@
+/* Remove all default margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Remove the border-box sizing in older versions of IE */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  /* Set a consistent font size and line-height */
+  html {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  /* Remove the underline from links */
+  a {
+    text-decoration: none;
+  }
+  
+  /* Set the default color for text */
+  body {
+    color: #333;
+  }
+  

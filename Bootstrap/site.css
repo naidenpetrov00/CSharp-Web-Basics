@@ -1,0 +1,35 @@
+/* Style for the navigation bar */
+.navbar {
+    background-color: #333; /* Set the background color */
+    color: #fff; /* Set the text color */
+    padding: 10px; /* Add some padding to the navigation bar */
+  }
+  
+  .navbar a {
+    color: #fff; /* Set the color of the navigation links */
+  }
+  
+  /* Style for the top and bottom border lines */
+  .top-border-line,
+  .bottom-border-line {
+    border-top: 2px solid #333; /* Set the border color and width */
+  }
+  
+  /* Style for the container */
+  .container {
+    text-align: center; /* Center the content within the container */
+    margin-top: 50px; /* Add some space between the footer and the content */
+  }
+  
+  /* Style for the footer */
+  footer {
+    font-size: 14px; /* Set the font size */
+    margin-top: 20px; /* Add some space between the footer and the container */
+  }
+  
+  /* Style for the primary separator */
+  .primary-separator {
+    margin: 20px 0; /* Add some space above and below the separator */
+    border-bottom: 1px solid #ccc; /* Set the border color and width */
+  }
+  
