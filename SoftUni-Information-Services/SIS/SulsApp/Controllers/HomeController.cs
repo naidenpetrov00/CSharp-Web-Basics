@@ -7,7 +7,7 @@
 	public class HomeController : Controller
 	{
 		[HttpGet("/")]
-		public HttpResponse Index(HttpRequest request)
+		public HttpResponse Index()
 		{
 			var viewModel = new IndexViewModel
 			{

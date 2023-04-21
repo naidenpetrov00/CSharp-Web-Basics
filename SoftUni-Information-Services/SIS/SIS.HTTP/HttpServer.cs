@@ -26,7 +26,7 @@
 		}
 
 		public async Task StartAsync()
-		{ 
+		{
 			tcpListener.Start();
 
 			while (true)
@@ -73,7 +73,7 @@
 				HttpResponse response;
 				var route = this.routeTable
 					.FirstOrDefault(r => r.HttpMethod == request.Methood &&
-					r.Path == request.Path);
+					string.Compare(r.Path, request.Path, true) == 0);
 				if (route == null)
 				{
 					response = new HttpResponse(HttpResponseCode.NotFound, new byte[0]);

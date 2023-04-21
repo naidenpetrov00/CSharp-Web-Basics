@@ -1,4 +1,4 @@
-﻿namespace DemoApp
+﻿namespace SIS.HTTP.Response
 {
 	using SIS.HTTP;
 	using System.Text;
@@ -10,7 +10,7 @@
 		{
 			this.StatusCode = HttpResponseCode.Ok;
 			var byteData = Encoding.UTF8.GetBytes(html);
-			this.Body= byteData;
+			this.Body = byteData;
 			this.Headers.Add(new Header("Content-type", "text/html"));
 			this.Headers.Add(new Header("Content-Length", this.Body.Length.ToString()));
 		}

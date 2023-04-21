@@ -1,6 +1,7 @@
 ﻿namespace SulsApp
 {
 	using SIS.MvcFramework;
+	using SulsApp.Models;
 
 	public class Program
 	{

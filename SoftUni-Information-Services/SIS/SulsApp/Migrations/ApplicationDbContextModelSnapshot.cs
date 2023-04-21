@@ -37,7 +37,7 @@ namespace SulsApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Problems", (string)null);
+                    b.ToTable("Problems");
                 });
 
             modelBuilder.Entity("SulsApp.Models.Submission", b =>
@@ -70,7 +70,7 @@ namespace SulsApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Submissions", (string)null);
+                    b.ToTable("Submissions");
                 });
 
             modelBuilder.Entity("SulsApp.Models.User", b =>
@@ -86,26 +86,26 @@ namespace SulsApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("SulsApp.Models.Submission", b =>
                 {
                     b.HasOne("SulsApp.Models.Problem", "Problem")
-                        .WithMany()
+                        .WithMany("Submissions")
                         .HasForeignKey("ProblemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SulsApp.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Submissions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -113,6 +113,16 @@ namespace SulsApp.Migrations
                     b.Navigation("Problem");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SulsApp.Models.Problem", b =>
+                {
+                    b.Navigation("Submissions");
+                });
+
+            modelBuilder.Entity("SulsApp.Models.User", b =>
+                {
+                    b.Navigation("Submissions");
                 });
 #pragma warning restore 612, 618
         }

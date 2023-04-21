@@ -1,7 +1,7 @@
-﻿using SIS.HTTP;
-
-namespace SIS.MvcFramework
+﻿namespace SIS.MvcFramework
 {
+	using SIS.HTTP;
+
 	public class HttpGetAttribute : HttpMethodAttribute
 	{
 		public HttpGetAttribute() { }
@@ -9,6 +9,6 @@ namespace SIS.MvcFramework
 		public HttpGetAttribute(string url)
 			: base(url) { }
 
-		public override HttpMethodType Type =>HttpMethodType.GET;
+		public override HttpMethodType Type => HttpMethodType.GET;
 	}
 }

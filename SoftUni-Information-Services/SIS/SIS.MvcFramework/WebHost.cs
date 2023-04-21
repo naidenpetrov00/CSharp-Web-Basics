@@ -1,7 +1,6 @@
 ﻿namespace SIS.MvcFramework
 {
 	using System;
-	using DemoApp;
 	using SIS.HTTP;
 	using SIS.HTTP.Response;
 
@@ -36,11 +35,11 @@
 				.Where(t => t.IsSubclassOf(typeof(Controller)) && !t.IsAbstract);
 			foreach (var type in types)
 			{
-				Console.WriteLine(type.FullName);
 				var methods = type
 					.GetMethods()
 					.Where(m => !m.IsConstructor
 					&& !m.IsSpecialName
+					&& m.IsPublic
 					&& m.DeclaringType == type);
 				foreach (var method in methods)
 				{
@@ -62,10 +61,10 @@
 					routeTable.Add(new Route(httpActionType, url, (request) =>
 					{
 						var controller = Activator.CreateInstance(type) as Controller;
-						var response = method.Invoke(controller, new[] { request }) as HttpResponse;
+						controller.Request = request;
+						var response = method.Invoke(controller, new object[] { }) as HttpResponse;
 						return response;
 					}));
-					Console.WriteLine("		" + url);
 				}
 			}
 		}

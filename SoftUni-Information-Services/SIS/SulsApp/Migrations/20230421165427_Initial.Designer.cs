@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SulsApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230407080108_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230421165427_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,7 +89,7 @@ namespace SulsApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
@@ -102,13 +102,13 @@ namespace SulsApp.Migrations
             modelBuilder.Entity("SulsApp.Models.Submission", b =>
                 {
                     b.HasOne("SulsApp.Models.Problem", "Problem")
-                        .WithMany()
+                        .WithMany("Submissions")
                         .HasForeignKey("ProblemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SulsApp.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Submissions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -116,6 +116,16 @@ namespace SulsApp.Migrations
                     b.Navigation("Problem");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SulsApp.Models.Problem", b =>
+                {
+                    b.Navigation("Submissions");
+                });
+
+            modelBuilder.Entity("SulsApp.Models.User", b =>
+                {
+                    b.Navigation("Submissions");
                 });
 #pragma warning restore 612, 618
         }

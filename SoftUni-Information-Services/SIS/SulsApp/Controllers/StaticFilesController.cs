@@ -7,7 +7,7 @@
 
 	public class StaticFilesController : Controller
 	{
-		public HttpResponse Site(HttpRequest request)
+		public HttpResponse Site()
 		{
 			return new FileResponse(File.ReadAllBytes("wwwroot/css/site.css"), "text/css");
 		}
