@@ -1,15 +1,35 @@
 ﻿namespace SulsApp.Controllers
 {
-	using DemoApp;
 	using SIS.HTTP;
-	using SIS.MvcFramework;
-	using SulsApp.Models;
-	using System;
 	using System.Net.Mail;
-	using System.Text;
+	using SIS.MvcFramework;
+	using SulsApp.Services;
 
 	public class UsersController : Controller
 	{
+		private readonly ApplicationDbContext db;
+		private IUsersService usersService;
+
+		public UsersController()
+		{
+			this.db = new ApplicationDbContext();
+			this.usersService = new UsersService(db);
+		}
+
+		private bool IsValidEmailAddress(string emailAddress)
+		{
+			try
+			{
+				var email = new MailAddress(emailAddress);
+
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
 		public HttpResponse Login()
 		{
 			return this.View();
@@ -38,47 +58,22 @@
 			{
 				return this.Error("Username should be between 5 and 20 characters!");
 			}
-
 			if (!IsValidEmailAddress(email))
 			{
 				return this.Error("Invalid Email");
-			}
-
-			if (password != confirmPassword)
-			{
-				return this.Error("Password should be the same!");
 			}
 			if (password?.Length < 6 || password?.Length > 20)
 			{
 				return this.Error("Password should be between 6 and 20 characters!");
 			}
-
-			var user = new User
+			if (password != confirmPassword)
 			{
-				Username = username,
-				Email = email,
-				Password = this.Hash(password),
-			};
+				return this.Error("Password should be the same!");
+			}
 
-			var db = new ApplicationDbContext();
-			db.Users.Add(user);
-			db.SaveChanges();
+			this.usersService.CreateUser(username, email, password);
 
 			return this.Redirect("/");
-		}
-
-		private bool IsValidEmailAddress(string emailAddress)
-		{
-			try
-			{
-				var email = new MailAddress(emailAddress);
-
-				return true;
-			}
-			catch
-			{
-				return false;
-			}
 		}
 	}
 }

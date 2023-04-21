@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SIS.MvcFramework
+﻿namespace SIS.MvcFramework
 {
+	using System.ComponentModel.DataAnnotations;
+
 	public class IdentityUser<T>
 	{
 		public T Id { get; set; }
@@ -15,5 +15,7 @@ namespace SIS.MvcFramework
 
 		[Required]
 		public string Password { get; set; }
+
+		public IdentityRole Role { get; set; }
 	}
 }

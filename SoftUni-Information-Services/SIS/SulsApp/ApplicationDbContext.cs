@@ -1,4 +1,4 @@
-﻿namespace DemoApp
+﻿namespace SulsApp
 {
 	using SulsApp.Models;
 	using Microsoft.EntityFrameworkCore;

@@ -137,3 +137,5 @@ C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFram
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework.Tests\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework.Tests\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework.Tests\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework.Tests\bin\Debug\net6.0\Microsoft.Practices.ServiceLocation.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SIS.MvcFramework.Tests\bin\Debug\net6.0\XAct.Core.PCL.dll
