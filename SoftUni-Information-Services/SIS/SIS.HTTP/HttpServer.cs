@@ -53,13 +53,15 @@
 				var requestBytes = new byte[100000];
 				var bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
 				var requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
+
 				var request = new HttpRequest(requestAsString);
+				string newSessionId = null;
 				var sessionCookie = request.Cookies.FirstOrDefault(c => c.Name == HttpConstants.SessionIdCookieName);
-				string? newSessionId = null;
 
 				if (sessionCookie != null && this.sessions.ContainsKey(sessionCookie.Value))
 				{
 					request.SessionData = this.sessions[sessionCookie.Value];
+					//this.sessions[sessionCookie.Value] = request.SessionData;
 				}
 				else
 				{
@@ -98,8 +100,8 @@
 
 				var responseBytes = Encoding.UTF8.GetBytes(response.ToString());
 
-				await networkStream.WriteAsync(responseBytes);
-				await networkStream.WriteAsync(response.Body);
+				await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length);
+				await networkStream.WriteAsync(response.Body, 0, response.Body.Length);
 			}
 			catch (Exception ex)
 			{

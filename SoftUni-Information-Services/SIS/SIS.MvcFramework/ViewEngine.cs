@@ -1,20 +1,14 @@
 ﻿namespace SIS.MvcFramework
 {
+	using System.Text;
+	using System.Reflection;
 	using Microsoft.CodeAnalysis;
 	using Microsoft.CodeAnalysis.CSharp;
-	using System.Reflection;
-	using System.Text;
 	using System.Text.RegularExpressions;
-
-	public interface IView
-	{
-		string GetHtml(object model);
-
-	}
 
 	public class ViewEngine : IViewEngine
 	{
-		public string GetHtml(string templateHtml, object model)
+		public string GetHtml(string templateHtml, object model, string user)
 		{
 			var methodCode = PrepareCSharpCode(templateHtml);
 			var typeName = model?.GetType().FullName ?? "object";
@@ -34,10 +28,10 @@ using SIS.MvcFramework;
  
 	public class AppViewCode : IView
 	{{
-		public string GetHtml(object model)
+		public string GetHtml(object model, string user)
 		{{
 			var Model = model as {typeName};
-			object User = null;
+			var User = user;
 			var html = new StringBuilder();
 			{methodCode}
 			return html.ToString();
@@ -46,7 +40,7 @@ using SIS.MvcFramework;
 }}";
 
 			IView view = GetInstanceFromCode(code, model);
-			var html = view.GetHtml(model);
+			var html = view.GetHtml(model, user);
 			return html;
 		}
 
@@ -91,7 +85,7 @@ using SIS.MvcFramework;
 
 		private string PrepareCSharpCode(string templateHtml)
 		{
-			var cSharpExpressionRegex = new Regex(@"[^\<\""\s]+", RegexOptions.Compiled);
+			var cSharpExpressionRegex = new Regex(@"[^\<\""\s&]+", RegexOptions.Compiled);
 			var supportedOpperators = new[] { "if", "for", "foreach", "else" };
 			var cSharpCode = new StringBuilder();
 			var reader = new StringReader(templateHtml);
@@ -114,14 +108,14 @@ using SIS.MvcFramework;
 					var currCSharpLine = new StringBuilder($"html.AppendLine(@\"");
 					while (line.Contains("@"))
 					{
-						var signLocation = line.IndexOf("@");
-						var htmlBefore = line.Substring(0, signLocation);
-						currCSharpLine.Append(htmlBefore.Replace("\"", "\"\"") + "\" + ");
-						var cSharpAndEndOfLine = line.Substring(signLocation + 1);
+						var atSignLocation = line.IndexOf("@");
+						var before = line.Substring(0, atSignLocation);
+						currCSharpLine.Append(before.Replace("\"", "\"\"") + "\" + ");
+						var cSharpAndEndOfLine = line.Substring(atSignLocation + 1);
 						var cSharpExpression = cSharpExpressionRegex.Match(cSharpAndEndOfLine);
 						currCSharpLine.Append(cSharpExpression.Value + " + @\"");
-						var lineAfter = cSharpAndEndOfLine.Substring(cSharpExpression.Length);
-						line = lineAfter;
+						var after = cSharpAndEndOfLine.Substring(cSharpExpression.Length);
+						line = after;
 					}
 
 					currCSharpLine.AppendLine(line.Replace("\"", "\"\"") + "\");");

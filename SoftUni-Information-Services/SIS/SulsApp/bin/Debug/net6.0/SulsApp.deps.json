@@ -11,7 +11,8 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.4",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.4",
           "SIS.HTTP": "1.0.0",
-          "SIS.MvcFramework": "1.0.0"
+          "SIS.MvcFramework": "1.0.0",
+          "XAct.Core.PCL": "0.0.5014"
         },
         "runtime": {
           "SulsApp.dll": {}

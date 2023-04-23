@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace SIS.HTTP
+﻿namespace SIS.HTTP
 {
 	public class Header
 	{

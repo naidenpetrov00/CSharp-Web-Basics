@@ -72,6 +72,8 @@
 			}
 
 			this.usersService.CreateUser(username, email, password);
+			var userId = this.usersService.GetUserId(username, password);
+			this.SignIn(userId);
 
 			return this.Redirect("/");
 		}

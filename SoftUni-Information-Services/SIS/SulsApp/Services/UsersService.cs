@@ -1,6 +1,7 @@
 ﻿namespace SulsApp.Services
 {
 	using System.Text;
+	using SIS.MvcFramework;
 	using SulsApp.Models;
 	using XSystem.Security.Cryptography;
 
@@ -49,19 +50,22 @@
 				Username = username,
 				Email = email,
 				Password = this.Hash(password),
+				Role = IdentityRole.User,
 			};
 
 			db.Users.Add(user);
 			db.SaveChanges();
 		}
 
-		public bool IsValidUser(string username, string password)
+		public string GetUserId(string username, string password)
 		{
 			var passwordHash = this.Hash(password);
 
 			return this.db.Users
-				.Any(u => u.Username == username
-				&& u.Password == passwordHash);
+				.Where(u => u.Username == username
+				&& u.Password == passwordHash)
+				.Select(u => u.Id)
+				.FirstOrDefault();
 		}
 	}
 }
