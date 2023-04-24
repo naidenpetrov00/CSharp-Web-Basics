@@ -1,7 +1,6 @@
 ﻿namespace SulsApp
 {
 	using SIS.MvcFramework;
-	using SulsApp.Services;
 
 	public class Program
 	{
@@ -17,4 +16,4 @@
 
 		}
 	}
-} 
+}
