@@ -4,18 +4,21 @@
 	using System.Net;
 	using System.Text;
 	using System;
+	using SIS.HTTP.Logging;
 
 	public class HttpServer : IHttpServer
 	{
+		private readonly ILogger logger;
 		private readonly TcpListener tcpListener;
 		private readonly IList<Route> routeTable;
 		private readonly IDictionary<string, IDictionary<string, string>> sessions;
 
 		//TODO: action
-		public HttpServer(int port, IList<Route> routeTable)
+		public HttpServer(int port, IList<Route> routeTable, ILogger logger)
 		{
 			this.tcpListener = new TcpListener(IPAddress.Loopback, port);
 			this.routeTable = routeTable;
+			this.logger = logger;
 			this.sessions = new Dictionary<string, IDictionary<string, string>>();
 		}
 
@@ -70,7 +73,7 @@
 					this.sessions.Add(newSessionId, dictionary);
 					request.SessionData = dictionary;
 				}
-				Console.WriteLine($"{request.Methood} {request.Path}");
+				this.logger.Log($"{request.Methood} {request.Path}");
 
 				HttpResponse response;
 				var route = this.routeTable

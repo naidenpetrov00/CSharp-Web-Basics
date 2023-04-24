@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SIS.MvcFramework
+﻿namespace SIS.MvcFramework
 {
+    using System;
+
     public interface IServiceCollection
     {
         void Add<TSource, TDestination>()

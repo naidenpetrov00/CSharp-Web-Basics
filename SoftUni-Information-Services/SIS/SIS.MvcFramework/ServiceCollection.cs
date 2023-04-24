@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-namespace SIS.MvcFramework
+﻿namespace SIS.MvcFramework
 {
-    public class ServiceCollection : IServiceCollection
+	using System;
+	using System.Linq;
+	using System.Reflection;
+	using System.Collections.Generic;
+	using System.Collections.Concurrent;
+
+	public class ServiceCollection : IServiceCollection
     {
         private IDictionary<Type, Type> dependecyContainer =
             new ConcurrentDictionary<Type, Type>();
 
         public void Add<TSource, TDestination>()
-            where TDestination : TSource
+            where TDestination : TSource 
         {
             dependecyContainer[typeof(TSource)] = typeof(TDestination);
         }

@@ -1,32 +1,39 @@
 ﻿namespace SIS.MvcFramework
 {
 	using System;
+	using System.Reflection;
 	using SIS.HTTP;
+	using SIS.HTTP.Logging;
 	using SIS.HTTP.Response;
+	using XAct.Messages;
 
 	public class WebHost
 	{
-		public static async Task Start(IMvcApplication app)
+		public static async Task StartAsync(IMvcApplication app)
 		{
 
 			var routeTable = new List<Route>();
-			app.ConfigureServices();
+			IServiceCollection serviceCollection = new ServiceCollection();
+			serviceCollection.Add<ILogger, ConsoleLogger>();
+			var logger = serviceCollection.CreateInstance<ILogger>();
+
+			app.ConfigureServices(serviceCollection);
 			app.Configure(routeTable);
 			AutoRegisterStaticFilesRoutes(routeTable);
-			AutoRegisterActionRoutes(routeTable, app);
+			AutoRegisterActionRoutes(routeTable, serviceCollection, app);
 
-			Console.WriteLine("Registered routes:");
+			logger.Log("Registered routes:");
 			foreach (var route in routeTable)
 			{
-				Console.WriteLine(route);
+				logger.Log(route.ToString());
 			}
 
-			Console.WriteLine("Requests:");
-			var httpServer = new HttpServer(80, routeTable);
+			logger.Log("Requests:");
+			var httpServer = new HttpServer(80, routeTable, logger);
 			await httpServer.StartAsync();
 		}
 
-		private static void AutoRegisterActionRoutes(List<Route> routeTable, IMvcApplication app)
+		private static void AutoRegisterActionRoutes(List<Route> routeTable, IServiceCollection services, IMvcApplication app)
 		{
 			var types = app
 				.GetType()
@@ -58,15 +65,18 @@
 						}
 					}
 
-					routeTable.Add(new Route(httpActionType, url, (request) =>
-					{
-						var controller = Activator.CreateInstance(type) as Controller;
-						controller.Request = request;
-						var response = method.Invoke(controller, new object[] { }) as HttpResponse;
-						return response;
-					}));
+					routeTable.Add(new Route(httpActionType, url, (request) => InvokeAction(request, services, type, method)));
 				}
 			}
+		}
+
+		private static HttpResponse InvokeAction(HttpRequest request, IServiceCollection services, Type controllerType, MethodInfo actionMethod)
+		{
+			var controller = services.CreateInstance(controllerType) as Controller;
+			controller.Request = request;
+			var response = actionMethod.Invoke(controller, new object[] { }) as HttpResponse;
+
+			return response;
 		}
 
 		private static void AutoRegisterStaticFilesRoutes(List<Route> routeTable)
