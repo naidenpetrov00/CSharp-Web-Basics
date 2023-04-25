@@ -1,6 +1,7 @@
 ﻿namespace SIS.MvcFramework
 {
 	using System;
+	using System.Linq;
 	using System.Reflection;
 	using SIS.HTTP;
 	using SIS.HTTP.Logging;
@@ -74,7 +75,31 @@
 		{
 			var controller = services.CreateInstance(controllerType) as Controller;
 			controller.Request = request;
-			var response = actionMethod.Invoke(controller, new object[] { }) as HttpResponse;
+			var actionParameterValues = new List<object>();
+			var actionParameters = actionMethod.GetParameters();
+			foreach (var parameter in actionParameters)
+			{
+				var parameterName = parameter.Name.ToLower();
+				object value = null;
+				if (request.QueryData.Any(e => e.Key.ToLower() == parameterName))
+				{
+					value = request.QueryData.
+						FirstOrDefault(e => e.Key.ToLower() == parameterName).Value;
+				}
+				else if (request.FormData.Any(e => e.Key.ToLower() == parameterName))
+				{
+					value = request.FormData.
+						FirstOrDefault(e => e.Key.ToLower() == parameterName).Value;
+				}
+				var httpParameter = request.FormData.
+					FirstOrDefault(k => string.Compare(k.Key, parameter.Name, true) == 0).Value;
+				if (true)
+				{
+
+				}
+				actionParameterValues.Add(value);
+			}
+			var response = actionMethod.Invoke(controller, actionParameters.ToArray()) as HttpResponse;
 
 			return response;
 		}

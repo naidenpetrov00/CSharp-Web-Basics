@@ -6,7 +6,7 @@ namespace SIS.MvcFramework.Tests
 		[InlineData("OnlyHtmlView")]
 		[InlineData("ForForeachIfView")]
 		[InlineData("ViewModelView")]
-		public void GetHtmlTest(string testName)
+		public void GetHtmlTest(string testName)  
 		{
 			var viewModel = new TestViewModel()
 			{
@@ -19,7 +19,7 @@ namespace SIS.MvcFramework.Tests
 			var expectedResultContent = File.ReadAllText($"ViewTests/{testName}.Expected.html");
 
 			var viewEngine = new ViewEngine();
-			var actualResult = viewEngine.GetHtml(viewContent, viewModel, null);
+			var actualResult = viewEngine.GetHtml(viewContent, viewModel, "123").TrimEnd();
 
 			Assert.Equal(expectedResultContent, actualResult);
 		}

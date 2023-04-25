@@ -39,11 +39,8 @@
 		}
 
 		[HttpPost("/Users/Login")]
-		public HttpResponse DoLogin()
+		public HttpResponse DoLogin(string username, string password)
 		{
-			var username = this.Request.FormData["username"];
-			var password = this.Request.FormData["password"];
-
 			var userId = this.usersService.GetUserId(username, password);
 			if (userId == null)
 			{

@@ -129,6 +129,7 @@
 		public IList<Header> Headers { get; set; }
 
 		public IList<Cookie> Cookies { get; set; }
+
 		public string Query { get; set; }
 
 		public IDictionary<string, string> QueryData { get; set; }

@@ -17,6 +17,7 @@
 		[HttpGet("/")]
 		public HttpResponse Index()
 		{
+			var request = this.Request;
 			this.logger.Log("Hello from Index");
 			var viewModel = new IndexViewModel
 			{
