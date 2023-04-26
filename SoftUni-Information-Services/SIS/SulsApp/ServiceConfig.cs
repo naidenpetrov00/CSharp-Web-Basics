@@ -12,6 +12,7 @@
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.Add<IUsersService, UsersService>();
+			services.Add<IProblemsService, ProblemsService>();
 			services.Add<ILogger, MyLogger>();
 		}
 

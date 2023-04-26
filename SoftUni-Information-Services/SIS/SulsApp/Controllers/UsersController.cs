@@ -5,6 +5,7 @@
     using SIS.MvcFramework;
     using SulsApp.Services;
     using SIS.HTTP.Logging;
+    using SulsApp.ViewModels.Users;
 
     public class UsersController : Controller
 	{
@@ -58,32 +59,27 @@
 		}
 
 		[HttpPost("/Users/Register")]
-		public HttpResponse DoRegister()
+		public HttpResponse DoRegister(RegisterInputModel input)
 		{
-			var username = this.Request.FormData["username"];
-			var email = this.Request.FormData["email"];
-			var password = this.Request.FormData["password"];
-			var confirmPassword = this.Request.FormData["confirm_password"];
-
-			if (password != confirmPassword)
+			if (input.Password != input.ConfirmPassword)
 			{
 				return this.Error("Password should be the same!");
 			}
-			if (username?.Length < 5 || username?.Length > 20)
+			if (input.Username?.Length < 5 || input.Username?.Length > 20)
 			{
 				return this.Error("Username should be between 5 and 20 characters!");
 			}
-			if (password?.Length < 6 || password?.Length > 20)
+			if (input.Password?.Length < 6 || input.Password?.Length > 20)
 			{
 				return this.Error("Password should be between 6 and 20 characters!");
 			}
-			if (!IsValidEmailAddress(email))
+			if (!IsValidEmailAddress(input.Email))
 			{
 				return this.Error("Invalid Email");
 			}
 
-			this.usersService.CreateUser(username, email, password);
-			this.logger.Log("New user: " + username);
+			this.usersService.CreateUser(input.Username, input.Email, input.Password);
+			this.logger.Log("New user: " + input.Username);
 
 			return this.Redirect("/");
 		}

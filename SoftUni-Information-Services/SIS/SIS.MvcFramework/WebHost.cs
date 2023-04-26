@@ -3,9 +3,11 @@
 	using System;
 	using System.Linq;
 	using System.Reflection;
+	using System.Reflection.Metadata;
 	using SIS.HTTP;
 	using SIS.HTTP.Logging;
 	using SIS.HTTP.Response;
+	using XAct;
 	using XAct.Messages;
 
 	public class WebHost
@@ -34,7 +36,7 @@
 			await httpServer.StartAsync();
 		}
 
-		private static void AutoRegisterActionRoutes(List<Route> routeTable, IServiceCollection services, IMvcApplication app)
+		private static void AutoRegisterActionRoutes(List<Route> routeTable, IServiceCollection serviceCollection, IMvcApplication app)
 		{
 			var types = app
 				.GetType()
@@ -66,37 +68,59 @@
 						}
 					}
 
-					routeTable.Add(new Route(httpActionType, url, (request) => InvokeAction(request, services, type, method)));
+					routeTable.Add(new Route(httpActionType, url, (request) => InvokeAction(request, serviceCollection, type, method)));
 				}
 			}
 		}
 
-		private static HttpResponse InvokeAction(HttpRequest request, IServiceCollection services, Type controllerType, MethodInfo actionMethod)
+		private static HttpResponse InvokeAction(HttpRequest request, IServiceCollection serviceCollection, Type controllerType, MethodInfo actionMethod)
 		{
-			var controller = services.CreateInstance(controllerType) as Controller;
+			var controller = serviceCollection.CreateInstance(controllerType) as Controller;
 			controller.Request = request;
 			var actionParameterValues = new List<object>();
 			var actionParameters = actionMethod.GetParameters();
 			foreach (var parameter in actionParameters)
 			{
-				var parameterName = parameter.Name.ToLower();
-				object value = null;
-				if (request.QueryData.Any(e => e.Key.ToLower() == parameterName))
-				{
-					value = request.QueryData.
-						FirstOrDefault(e => e.Key.ToLower() == parameterName).Value;
-				}
-				else if (request.FormData.Any(e => e.Key.ToLower() == parameterName))
-				{
-					value = request.FormData.
-						FirstOrDefault(e => e.Key.ToLower() == parameterName).Value;
-				}
+				object value = GetValueFromRequest(controller.Request, parameter.Name);
 
-				actionParameterValues.Add(value);
+				try
+				{
+					actionParameterValues.Add(Convert.ChangeType(value, parameter.ParameterType));
+				}
+				catch
+				{
+					var parameterValue = serviceCollection.CreateInstance(parameter.ParameterType);
+					foreach (var property in parameter.ParameterType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+					{
+						var propertyValue = GetValueFromRequest(request, property.Name);
+						property.SetValue(parameterValue, Convert.ChangeType(propertyValue, property.PropertyType));
+					}
+
+					actionParameterValues.Add(parameterValue);
+				}
 			}
-			var response = actionMethod.Invoke(controller, actionParameters.ToArray()) as HttpResponse;
+			var response = actionMethod.Invoke(controller, actionParameterValues.ToArray()) as HttpResponse;
 
 			return response;
+		}
+
+		private static object GetValueFromRequest(HttpRequest request, string parameterName)
+		{
+			parameterName = parameterName.ToLower();
+			object value = null;
+
+			if (request.QueryData.Any(e => e.Key.ToLower() == parameterName))
+			{
+				value = request.QueryData.
+					FirstOrDefault(e => e.Key.ToLower() == parameterName).Value;
+			}
+			else if (request.FormData.Any(e => e.Key.ToLower() == parameterName))
+			{
+				value = request.FormData.
+					FirstOrDefault(e => e.Key.ToLower() == parameterName).Value;
+			}
+
+			return value;
 		}
 
 		private static void AutoRegisterStaticFilesRoutes(List<Route> routeTable)
