@@ -98,3 +98,127 @@ input[type="submit"] {
     .jumbotron a:hover {
         background-color: #eee;
     }
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px #ccc;
+    width: 100%;
+}
+
+button[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+    button[type="submit"]:hover {
+        background-color: #555;
+    }
+
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Row container */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Jumbotron container */
+.jumbotron {
+    background-color: lightslategrey;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 500px;
+    width: 100%;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+/* Heading container */
+.heading-container {
+    margin-bottom: 30px;
+}
+
+    /* Heading 1 */
+    .heading-container h1 {
+        font-size: 60px;
+        margin-bottom: 0;
+    }
+
+    /* Heading 2 */
+    .heading-container h2 {
+        font-size: 36px;
+        margin-top: 0;
+    }
+
+    /* Image container */
+    .heading-container img {
+        width: 200px;
+        margin-top: 20px;
+    }
+
+/* Login and Register links */
+.jumbotron h3 {
+    margin-top: 40px;
+    font-size: 24px;
+}
+
+        .jumbotron h3 a:hover {
+            text-decoration: underline;
+        }
+
+/* Media query for small screens */
+@media (max-width: 576px) {
+    .heading-container h1 {
+        font-size: 36px;
+    }
+
+    .heading-container h2 {
+        font-size: 24px;
+    }
+
+    .heading-container img {
+        width: 100px;
+    }
+
+    .jumbotron {
+        height: 400px;
+        padding: 30px;
+    }
+
+        .jumbotron h3 {
+            margin-top: 30px;
+            font-size: 20px;
+        }
+}

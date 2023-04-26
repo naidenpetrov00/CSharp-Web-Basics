@@ -91,12 +91,7 @@
 					value = request.FormData.
 						FirstOrDefault(e => e.Key.ToLower() == parameterName).Value;
 				}
-				var httpParameter = request.FormData.
-					FirstOrDefault(k => string.Compare(k.Key, parameter.Name, true) == 0).Value;
-				if (true)
-				{
 
-				}
 				actionParameterValues.Add(value);
 			}
 			var response = actionMethod.Invoke(controller, actionParameters.ToArray()) as HttpResponse;

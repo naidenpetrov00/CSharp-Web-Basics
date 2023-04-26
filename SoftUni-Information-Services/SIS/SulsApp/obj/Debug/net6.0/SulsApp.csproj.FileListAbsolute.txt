@@ -112,3 +112,5 @@ C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\Microsoft.Practices.ServiceLocation.dll
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\XAct.Core.PCL.dll
 C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\System.Reflection.Metadata.dll
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\Views\Problems\Create.html
+C:\Naiden\Softuni\CSharp-Web-Basics\SoftUni-Information-Services\SIS\SulsApp\bin\Debug\net6.0\Views\Submissions\Create.html
