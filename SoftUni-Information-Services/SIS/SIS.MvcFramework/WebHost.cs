@@ -96,6 +96,10 @@
 
 					actionParameterValues.Add(parameterValue);
 				}
+				else
+				{
+					actionParameterValues.Add(value);
+				}
 			}
 			var response = actionMethod.Invoke(controller, actionParameterValues.ToArray()) as HttpResponse;
 
