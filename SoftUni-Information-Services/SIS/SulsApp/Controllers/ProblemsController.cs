@@ -18,8 +18,8 @@
 			return this.View();
 		}
 
-		[HttpPost("/Problems/Create")]
-		public HttpResponse DoCreate(string name, int points)
+		[HttpPost]
+		public HttpResponse Create(string name, int points)
 		{
 			if (string.IsNullOrWhiteSpace(name))
 			{

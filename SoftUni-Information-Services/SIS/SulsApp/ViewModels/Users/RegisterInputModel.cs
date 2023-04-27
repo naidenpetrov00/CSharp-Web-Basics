@@ -4,11 +4,6 @@ namespace SulsApp.ViewModels.Users
 {
     public class RegisterInputModel
     {
-        public RegisterInputModel(ILogger logger)
-        {
-
-        }
-
         public string Username { get; set; }
 
         public string Email { get; set; }

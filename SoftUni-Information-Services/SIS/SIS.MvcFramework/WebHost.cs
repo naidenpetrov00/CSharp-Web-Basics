@@ -77,17 +77,15 @@
 		{
 			var controller = serviceCollection.CreateInstance(controllerType) as Controller;
 			controller.Request = request;
+
 			var actionParameterValues = new List<object>();
 			var actionParameters = actionMethod.GetParameters();
 			foreach (var parameter in actionParameters)
 			{
-				object value = GetValueFromRequest(controller.Request, parameter.Name);
+				object value = Convert
+					.ChangeType(GetValueFromRequest(controller.Request, parameter.Name), parameter.ParameterType);
 
-				try
-				{
-					actionParameterValues.Add(Convert.ChangeType(value, parameter.ParameterType));
-				}
-				catch
+				if (value == null)
 				{
 					var parameterValue = serviceCollection.CreateInstance(parameter.ParameterType);
 					foreach (var property in parameter.ParameterType.GetProperties(BindingFlags.Instance | BindingFlags.Public))

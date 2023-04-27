@@ -39,8 +39,8 @@
 			return this.View();
 		}
 
-		[HttpPost("/Users/Login")]
-		public HttpResponse DoLogin(string username, string password)
+		[HttpPost]
+		public HttpResponse Login(string username, string password)
 		{
 			var userId = this.usersService.GetUserId(username, password);
 			if (userId == null)
@@ -58,8 +58,8 @@
 			return this.View();
 		}
 
-		[HttpPost("/Users/Register")]
-		public HttpResponse DoRegister(RegisterInputModel input)
+		[HttpPost]
+		public HttpResponse Register(RegisterInputModel input)
 		{
 			if (input.Password != input.ConfirmPassword)
 			{
