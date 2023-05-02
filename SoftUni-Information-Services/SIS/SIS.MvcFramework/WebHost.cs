@@ -1,14 +1,11 @@
 ﻿namespace SIS.MvcFramework
 {
 	using System;
-	using System.Linq;
-	using System.Reflection;
-	using System.Reflection.Metadata;
 	using SIS.HTTP;
+	using System.Linq;
 	using SIS.HTTP.Logging;
+	using System.Reflection;
 	using SIS.HTTP.Response;
-	using XAct;
-	using XAct.Messages;
 
 	public class WebHost
 	{

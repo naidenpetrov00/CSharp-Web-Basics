@@ -1,19 +1,21 @@
 ﻿namespace SIS.HTTP
 {
-	using System.Net.Sockets;
+	using System;
 	using System.Net;
 	using System.Text;
-	using System;
+	using System.Linq;
 	using SIS.HTTP.Logging;
+	using System.Net.Sockets;
+	using System.Threading.Tasks;
+	using System.Collections.Generic;
 
 	public class HttpServer : IHttpServer
 	{
-		private readonly ILogger logger;
 		private readonly TcpListener tcpListener;
 		private readonly IList<Route> routeTable;
+		private readonly ILogger logger;
 		private readonly IDictionary<string, IDictionary<string, string>> sessions;
 
-		//TODO: action
 		public HttpServer(int port, IList<Route> routeTable, ILogger logger)
 		{
 			this.tcpListener = new TcpListener(IPAddress.Loopback, port);
@@ -22,49 +24,58 @@
 			this.sessions = new Dictionary<string, IDictionary<string, string>>();
 		}
 
+		/// <summary>
+		/// Resets the HTTP Server asynchronously.
+		/// </summary>
 		public async Task ResetAsync()
 		{
 			this.Stop();
 			await this.StartAsync();
 		}
 
+		/// <summary>
+		/// Starts the HTTP Server asynchronously.
+		/// </summary>
 		public async Task StartAsync()
 		{
-			tcpListener.Start();
-
+			this.tcpListener.Start();
 			while (true)
 			{
-				var tcpCLient = await tcpListener.AcceptTcpClientAsync();
+				TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-				Task.Run(() => ProccessClientAsync(tcpCLient));
+				Task.Run(() => ProcessClientAsync(tcpClient));
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 			}
 		}
 
+		/// <summary>
+		/// Stops the HTTP Server.
+		/// </summary>
 		public void Stop()
 		{
 			this.tcpListener.Stop();
 		}
 
-		private async Task ProccessClientAsync(TcpClient tcpClient)
+		/// <summary>
+		/// Processes the <see cref="TcpClient"/> asynchronously and returns HTTP Response for the browser.
+		/// </summary>
+		/// <param name="tcpClient">TCP Client</param>
+		/// <returns></returns>
+		private async Task ProcessClientAsync(TcpClient tcpClient)
 		{
-			using var networkStream = tcpClient.GetStream();
-
+			using NetworkStream networkStream = tcpClient.GetStream();
 			try
 			{
-				// TODO: Use buffer 
-				var requestBytes = new byte[100000];
-				var bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
-				var requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
+				byte[] requestBytes = new byte[1000000]; // TODO: Use buffer
+				int bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
+				string requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
 
 				var request = new HttpRequest(requestAsString);
 				string newSessionId = null;
-				var sessionCookie = request.Cookies.FirstOrDefault(c => c.Name == HttpConstants.SessionIdCookieName);
-
+				var sessionCookie = request.Cookies.FirstOrDefault(x => x.Name == HttpConstants.SessionIdCookieName);
 				if (sessionCookie != null && this.sessions.ContainsKey(sessionCookie.Value))
 				{
 					request.SessionData = this.sessions[sessionCookie.Value];
-					//this.sessions[sessionCookie.Value] = request.SessionData;
 				}
 				else
 				{
@@ -73,12 +84,12 @@
 					this.sessions.Add(newSessionId, dictionary);
 					request.SessionData = dictionary;
 				}
-				this.logger.Log($"{request.Methood} {request.Path}");
 
+				this.logger.Log($"{request.Method} {request.Path}");
+
+				var route = this.routeTable.FirstOrDefault(
+					x => x.HttpMethod == request.Method && string.Compare(x.Path, request.Path, true) == 0);
 				HttpResponse response;
-				var route = this.routeTable
-					.FirstOrDefault(r => r.HttpMethod == request.Methood &&
-					string.Compare(r.Path, request.Path, true) == 0);
 				if (route == null)
 				{
 					response = new HttpResponse(HttpResponseCode.NotFound, new byte[0]);
@@ -88,21 +99,16 @@
 					response = route.Action(request);
 				}
 
-				response.Headers.Add(new Header("Server", "NaidenServer/1.0"));
-
+				response.Headers.Add(new Header("Server", "SoftUniServer/1.0"));
 
 				if (newSessionId != null)
 				{
-					response.Cookies.Add(new ResponseCookie(HttpConstants.SessionIdCookieName, newSessionId)
-					{
-						Secure = true,
-						HttpOnly = true,
-						MaxAge = 30 * 3600,
-					});
+					response.Cookies.Add(
+						new ResponseCookie(HttpConstants.SessionIdCookieName, newSessionId)
+						{ HttpOnly = true, MaxAge = 30 * 3600, });
 				}
 
-				var responseBytes = Encoding.UTF8.GetBytes(response.ToString());
-
+				byte[] responseBytes = Encoding.UTF8.GetBytes(response.ToString());
 				await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length);
 				await networkStream.WriteAsync(response.Body, 0, response.Body.Length);
 			}
@@ -112,10 +118,9 @@
 					HttpResponseCode.InternalServerError,
 					Encoding.UTF8.GetBytes(ex.ToString()));
 				errorResponse.Headers.Add(new Header("Content-Type", "text/plain"));
-				var responseBytes = Encoding.UTF8.GetBytes(errorResponse.ToString());
-
-				await networkStream.WriteAsync(responseBytes);
-				await networkStream.WriteAsync(errorResponse.Body);
+				byte[] responseBytes = Encoding.UTF8.GetBytes(errorResponse.ToString());
+				await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length);
+				await networkStream.WriteAsync(errorResponse.Body, 0, errorResponse.Body.Length);
 			}
 		}
 	}

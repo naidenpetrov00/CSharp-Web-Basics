@@ -26,7 +26,7 @@
 
 			//Method
 			var httpMethod = infoHeaderParts[0];
-			this.Methood = httpMethod switch
+			this.Method = httpMethod switch
 			{
 				"POST" => HttpMethodType.POST,
 				"GET" => HttpMethodType.GET,
@@ -120,7 +120,7 @@
 			}
 		}
 
-		public HttpMethodType Methood { get; set; }
+		public HttpMethodType Method { get; set; }
 
 		public string Path { get; set; }
 
