@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Andreys.Models
+﻿namespace Andreys.Models
 {
+	using System.ComponentModel.DataAnnotations;
+
 	public class User
 	{
 		public User()
 		{
+			this.Products = new HashSet<Product>();
 			this.Id = Guid.NewGuid().ToString();
 		}
 
@@ -21,5 +22,7 @@ namespace Andreys.Models
 
 		[Required]
 		public string Email { get; set; }
+
+		public ICollection<Product> Products { get; set; }
 	}
 }
