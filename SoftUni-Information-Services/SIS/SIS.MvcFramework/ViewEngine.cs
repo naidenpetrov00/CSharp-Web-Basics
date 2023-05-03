@@ -38,7 +38,6 @@ using SIS.MvcFramework;
 		}}
 	}}
 }}";
-
 			IView view = GetInstanceFromCode(code, model);
 			var html = view.GetHtml(model, user);
 			return html;

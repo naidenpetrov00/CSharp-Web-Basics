@@ -4,6 +4,8 @@
 	using Andreys.Data;
 	using SIS.MvcFramework;
 	using System.Collections.Generic;
+	using Andreys.Services.Interfaces;
+	using Andreys.Services;
 
 	public class Startup : IMvcApplication
 	{
@@ -15,7 +17,7 @@
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-
+			services.Add<IUserService, UserService>();
 		}
 	}
 }

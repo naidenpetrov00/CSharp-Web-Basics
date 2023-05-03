@@ -1,0 +1,19 @@
+﻿namespace Andreys.Controllers
+{
+	using SIS.HTTP;
+	using SIS.MvcFramework;
+	public class HomeController : Controller
+	{
+		[HttpGet("/")]
+		public HttpResponse Index()
+		{
+			return this.View();
+		}
+
+		[HttpGet("/Home")]
+		public HttpResponse Home()
+		{
+			return this.View();
+		}
+	}
+}
