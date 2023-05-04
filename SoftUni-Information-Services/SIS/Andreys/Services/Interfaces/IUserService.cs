@@ -2,8 +2,8 @@
 {
 	public interface IUserService
 	{
-		void CreateUser(string username, string email, string password);
-
+		string CreateUser(string username, string email, string password);
+		string GetUserId(string username, string password);
 		void SignIn(string username, string password);
 
 		void SignOut();

@@ -9,7 +9,7 @@
 
 	public class UserService : IUserService
 	{
-		public ApplicationDbContext db { get; }
+		public ApplicationDbContext db;
 
 		public UserService(ApplicationDbContext db)
 		{
@@ -28,7 +28,7 @@
 			return hash.ToString();
 		}
 
-		public void CreateUser(string username, string email, string password)
+		public string CreateUser(string username, string email, string password)
 		{
 			var user = new User
 			{
@@ -39,6 +39,18 @@
 
 			this.db.Users.Add(user);
 			this.db.SaveChanges();
+
+			return user.Id;
+		}
+
+		public string GetUserId(string username, string password)
+		{
+			var hashedPassword = this.Hash(password);
+
+			var user = this.db.Users
+				.FirstOrDefault(u => u.Username == username && u.Password == hashedPassword);
+
+			return user.Id;
 		}
 
 		public void SignIn(string username, string password)

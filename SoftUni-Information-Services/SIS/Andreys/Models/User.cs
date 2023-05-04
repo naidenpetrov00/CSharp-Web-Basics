@@ -13,11 +13,9 @@
 		public string Id { get; set; }
 
 		[Required]
-		[MaxLength(10)]
 		public string Username { get; set; }
 
 		[Required]
-		[MaxLength(20)]
 		public string Password { get; set; }
 
 		[Required]

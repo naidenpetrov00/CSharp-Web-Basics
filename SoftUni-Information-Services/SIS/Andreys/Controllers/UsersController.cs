@@ -1,6 +1,7 @@
 ﻿namespace Andreys.Controllers
 {
 	using Andreys.Services.Interfaces;
+	using Hanssens.Net;
 	using Microsoft.EntityFrameworkCore.Query.Internal;
 	using SIS.HTTP;
 	using SIS.MvcFramework;
@@ -22,6 +23,12 @@
 		[HttpPost]
 		public HttpResponse Login(string username, string password)
 		{
+			var userId = this.userService.GetUserId(username, password);
+			if (userId == null)
+			{
+				this.Redirect("/Users/Login");
+			}
+
 			return this.Redirect("/");
 		}
 

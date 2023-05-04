@@ -10,8 +10,8 @@
 		public IDictionary<string, string> CurrUser { get; set; }
 
 		public string User =>
-			this.Request.SessionData.ContainsKey("UserId") ?
-				this.Request.SessionData["UserId"] : null;
+		this.Request.SessionData.ContainsKey("UserId") ?
+			this.Request.SessionData["UserId"] : null;
 
 		private HttpResponse ViewByName<T>(string viewPath, object viewModel)
 		{
