@@ -15,7 +15,7 @@
 			if (model?.GetType().IsGenericType == true)
 			{
 				typeName = model.GetType().Name.Replace("`1", string.Empty) +
-					"<" + model.GetType().GenericTypeArguments.First().Name + ">";
+					"<" + model.GetType().GenericTypeArguments.First().FullName + ">";
 			}
 			var code =
 $@"namespace AppViewNamespace
@@ -25,7 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using SIS.MvcFramework;
- 
+
 	public class AppViewCode : IView
 	{{
 		public string GetHtml(object model, string user)

@@ -1,9 +1,17 @@
 ﻿namespace Andreys.Controllers
 {
-	using SIS.HTTP;
-	using SIS.MvcFramework;
-	public class HomeController : Controller
+    using Andreys.Services.Interfaces;
+    using SIS.HTTP;
+    using SIS.MvcFramework;
+    public class HomeController : Controller
 	{
+		private readonly IHomeService homeService;
+
+		public HomeController(IHomeService homeService)
+		{
+			this.homeService = homeService;
+		}
+
 		[HttpGet("/")]
 		public HttpResponse Index()
 		{
@@ -13,7 +21,9 @@
 		[HttpGet("/Home")]
 		public HttpResponse Home()
 		{
-			return this.View();
+			var models = this.homeService.GetProducts();
+
+			return this.View(models);
 		}
 	}
 }

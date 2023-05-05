@@ -28,6 +28,9 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
+              "C:\\Naiden\\Softuni\\CSharp-Web-Basics\\SoftUni-Information-Services\\SIS\\SIS.HTTP\\SIS.HTTP.csproj": {
+                "projectPath": "C:\\Naiden\\Softuni\\CSharp-Web-Basics\\SoftUni-Information-Services\\SIS\\SIS.HTTP\\SIS.HTTP.csproj"
+              },
               "C:\\Naiden\\Softuni\\CSharp-Web-Basics\\SoftUni-Information-Services\\SIS\\SIS.MvcFramework\\SIS.MvcFramework.csproj": {
                 "projectPath": "C:\\Naiden\\Softuni\\CSharp-Web-Basics\\SoftUni-Information-Services\\SIS\\SIS.MvcFramework\\SIS.MvcFramework.csproj"
               }

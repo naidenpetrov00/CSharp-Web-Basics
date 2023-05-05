@@ -18,6 +18,8 @@
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.Add<IUserService, UserService>();
+			services.Add<IProductService, ProductService>();
+			services.Add<IHomeService, HomeService>();
 		}
 	}
 }
