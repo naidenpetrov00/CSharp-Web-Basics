@@ -5,6 +5,7 @@
 	using Microsoft.CodeAnalysis;
 	using Microsoft.CodeAnalysis.CSharp;
 	using System.Text.RegularExpressions;
+	using Microsoft.VisualBasic;
 
 	public class ViewEngine : IViewEngine
 	{
@@ -25,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using SIS.MvcFramework;
+using Andreys.ViewModels;
 
 	public class AppViewCode : IView
 	{{
@@ -52,7 +54,16 @@ using SIS.MvcFramework;
 				.AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
 			if (model != null)
 			{
-				compilation = compilation.AddReferences(MetadataReference.CreateFromFile(model.GetType().Assembly.Location));
+				if (model?.GetType().IsGenericType == true)
+				{
+
+
+					compilation = compilation.AddReferences(MetadataReference.CreateFromFile(model.GetType().Assembly.Location));
+				}
+				else
+				{
+					compilation = compilation.AddReferences(MetadataReference.CreateFromFile(model.GetType().Assembly.Location));
+				}
 			}
 
 			var libraries = Assembly.Load(new AssemblyName("netstandard")).GetReferencedAssemblies();
