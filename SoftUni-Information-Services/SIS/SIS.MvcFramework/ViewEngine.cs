@@ -26,7 +26,6 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using SIS.MvcFramework;
-using Andreys.ViewModels;
 
 	public class AppViewCode : IView
 	{{
@@ -56,9 +55,8 @@ using Andreys.ViewModels;
 			{
 				if (model?.GetType().IsGenericType == true)
 				{
-
-
-					compilation = compilation.AddReferences(MetadataReference.CreateFromFile(model.GetType().Assembly.Location));
+					string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+					compilation = compilation.AddReferences(MetadataReference.CreateFromFile(assemblyFolder + "\\Andreys.dll"));
 				}
 				else
 				{
