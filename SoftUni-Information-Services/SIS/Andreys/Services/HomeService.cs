@@ -13,10 +13,10 @@
 			this.db = db;
 		}
 
-		public ICollection<ProductViewModel> GetProducts()
+		public ICollection<AllProductsViewModel> GetProducts()
 		{
 			var productModels = db.Products
-				.Select(p => new ProductViewModel
+				.Select(p => new AllProductsViewModel
 				{
 					Id= p.Id,
 					Name = p.Name,

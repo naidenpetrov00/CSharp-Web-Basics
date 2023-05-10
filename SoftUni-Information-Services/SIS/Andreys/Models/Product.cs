@@ -3,9 +3,14 @@
 	using Andreys.Data.Enums;
 	using System.ComponentModel.DataAnnotations;
 
-	public partial class Product
+	public class Product
 	{
-		public int Id { get; set; }
+		public Product()
+		{
+			this.Id = Guid.NewGuid().ToString();
+		}
+
+		public string Id { get; set; }
 
 		[Required]
 		[MaxLength(20)]

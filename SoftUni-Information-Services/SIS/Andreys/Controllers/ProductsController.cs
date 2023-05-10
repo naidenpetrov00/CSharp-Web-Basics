@@ -27,7 +27,21 @@
 		{
 			this.productService.AddProduct(input);
 
-			return this.Redirect("/");
+			return this.Redirect("/Home");
+		}
+
+		public HttpResponse Delete()
+		{
+			this.productService.DeleteProduct(this.Request.Query);
+
+			return this.Redirect("/Home");
+		}
+
+		public HttpResponse Details()
+		{
+			var productModel = this.productService.GetProductDetails(this.Request.Query);
+
+			return this.View(productModel);
 		}
 	}
 }

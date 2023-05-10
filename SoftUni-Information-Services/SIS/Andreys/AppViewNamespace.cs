@@ -10,7 +10,7 @@
 	{
 		public string GetHtml(object model, string user)
 		{
-			var Model = model as List<Andreys.ViewModels.ProductViewModel>;
+			var Model = model as List<Andreys.ViewModels.AllProductsViewModel>;
 			var User = user;
 			var html = new StringBuilder();
 			html.AppendLine(@"<h1 class=""text-center""><span class=""badge badge-pill badge-dark"">Products</span></h1>");

@@ -4,6 +4,6 @@
 
 	public interface IHomeService
     {
-        ICollection<ProductViewModel> GetProducts();
+        ICollection<AllProductsViewModel> GetProducts();
     }
 }
